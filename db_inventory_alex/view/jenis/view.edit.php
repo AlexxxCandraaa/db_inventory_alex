@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <b>
     <meta charset="UTF-8">
@@ -13,7 +12,7 @@
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">KazeeStore</a>
+    <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -34,47 +33,26 @@
 </nav>
 <div class="container">
     <h1>Data Jenis</h1>
-   
-    <a href="view_tambah.php" class="btn btn-primary">Tambah Jenis Baru</a>
-    <br></br>
-    
-    <table class="table table-bordered table-striped" border="1">
-  <thead>
-    <tr>
-      <th scope="col">ID Jenis</th>
-      <th scope="col">Nama Jenis</th>
-      <th scope="col">Aksi</th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-  <?php
-  include '../../config/koneksi.php';
-  $query = mysqli_query($conn, "SELECT * FROM jenis");
-  
-  if(mysqli_num_rows($query)){
-    while ($result=mysqli_fetch_assoc($query)){
-      ?>
-    <tr>
-      
-      <td><?php echo $result['id_jenis'];?></td>
-      <td><?php echo $result['nama_jenis'];?></td>
-  
-      <td>
-        <a href="view_edit.php?id_jenis=<?php echo $result['id_jenis']?>"
-        class="btn btn-warning"><i class="fa-solid fa-pen-fancy"></i>Edit</a>
-        <a href="hapus.php?id_jenis=<?php echo $result['id_jenis']?>"
-        onclick="return confirm('Apakah Kamu Yakin Ingin Menghapus Ini?')"
-        class="btn btn-danger"><i class="fa-solid fa-trash"></i>Hapus</a>
-      </td>
-    </tr>
-  <?php 
-    }
-  }
+    <?php
+    include '../../config/koneksi.php';
+    $id_jenis=$_GET['id_jenis'];
+    $query = mysqli_query($conn, "SELECT * FROM jenis where id_jenis='$id_jenis'");
+    $result=mysqli_fetch_array($query);
     ?>
-  
-</table>
+    <br>
+    <form action="proses_edit.php" method="post">
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">ID Jenis</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="id_jenis">
+     </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Nama Jenis</label>
+    <input type="text" class="form-control" id="exampleInputPassword1" name="nama_jenis">
+  </div>
+
+ 
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 </div>
 </body>
-  
 </html>

@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <b>
     <meta charset="UTF-8">
@@ -23,7 +22,7 @@
           <a class="nav-link active" aria-current="page" href="../barang/index.php">Barang</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../jenis/index.php">Jenis</a>
+          <a class="nav-link" href="../barang/index.php">barang</a>
         </li>
       </ul>
       <form class="d-flex" role="search">
@@ -33,48 +32,29 @@
   </div>
 </nav>
 <div class="container">
-    <h1>Data Jenis</h1>
-   
-    <a href="view_tambah.php" class="btn btn-primary">Tambah Jenis Baru</a>
-    <br></br>
-    
-    <table class="table table-bordered table-striped" border="1">
-  <thead>
-    <tr>
-      <th scope="col">ID Jenis</th>
-      <th scope="col">Nama Jenis</th>
-      <th scope="col">Aksi</th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-  <?php
-  include '../../config/koneksi.php';
-  $query = mysqli_query($conn, "SELECT * FROM jenis");
-  
-  if(mysqli_num_rows($query)){
-    while ($result=mysqli_fetch_assoc($query)){
-      ?>
-    <tr>
-      
-      <td><?php echo $result['id_jenis'];?></td>
-      <td><?php echo $result['nama_jenis'];?></td>
-  
-      <td>
-        <a href="view_edit.php?id_jenis=<?php echo $result['id_jenis']?>"
-        class="btn btn-warning"><i class="fa-solid fa-pen-fancy"></i>Edit</a>
-        <a href="hapus.php?id_jenis=<?php echo $result['id_jenis']?>"
-        onclick="return confirm('Apakah Kamu Yakin Ingin Menghapus Ini?')"
-        class="btn btn-danger"><i class="fa-solid fa-trash"></i>Hapus</a>
-      </td>
-    </tr>
-  <?php 
-    }
-  }
+    <h1>Data Barang</h1>
+    <?php
+    include '../../config/koneksi.php';
+    $id_jenis=$_GET['id_barang'];
+    $query = mysqli_query($conn, "SELECT * FROM barang where id_barang='$id_barang'");
+    $result=mysqli_fetch_array($query);
     ?>
-  
-</table>
+    <br>
+    <form action="proses_edit.php?id_barang=<?php echo $result['id_barang']?>" method="post">
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">ID barang</label>
+    <input type="text" class="form-control"  name="id_barang"
+    value="<?php echo $result['id_barang']?>" id="exampleInputEmail1" aria-describedby="emailHelp" >
+     </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Nama Barang</label>
+    <input type="text" class="form-control"  name="nama_barang"
+    value="<?php echo $result['nama_barang']?>" id="exampleInputPassword1" >
+  </div>
+
+ 
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 </div>
 </body>
-  
 </html>
